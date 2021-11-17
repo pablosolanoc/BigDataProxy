@@ -124,11 +124,11 @@ router.put('/flights', async  function(req, res) {
 
 router.delete('/flights', async  function(req, res) {
   try{
-    debug(req.body);
+    debug(req.query);
 
     const {database, flights, db} = await run();
 
-    const {id} = req.body;
+    const {id} = req.query;
 
     flights.deleteOne({"_id": new ObjectID(id)}, function(err, obj) {
       if (err) throw err;
