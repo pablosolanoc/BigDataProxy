@@ -38,13 +38,13 @@ router.get('/flights', async  function(req, res, next) {
   try{
     debug(req.params);
     
-    const {year, flightNum} = req.query;
-    debug({year, flightNum});
+    let {Year, FlightNum} = req.query;
+    debug({Year, FlightNum});
 
     const {flights, db} = await run();
 
-    const year2 = parseInt(year);
-    const flightNum2 = parseInt(flightNum);
+    const year2 = parseInt(Year);
+    const flightNum2 = parseInt(FlightNum);
     flights.find({Year: year2, FlightNum: flightNum2}).toArray(function(err, result) {
       if (err) throw err;
       debug(result)
@@ -66,16 +66,16 @@ router.post('/flights', async  function(req, res) {
 
     const {database, flights, db} = await run();
 
-    const {year, month, dayofMonth, depTime, arrTime, flightNum,  uniqueCarrier, origin, dest} = req.body;
+    let {Year, Month, DayofMonth, DepTime, ArrTime, FlightNum,  UniqueCarrier, Origin, Dest} = req.body;
   
-    const Year = parseInt(year); 
-    const Month = parseInt(month); 
-    const DayofMonth = parseInt(dayofMonth); 
-    const DepTime = parseInt(depTime); 
-    const ArrTime = parseInt(arrTime); 
-    const FlightNum = parseInt(flightNum); 
+    Year = parseInt(Year); 
+    Month = parseInt(Month); 
+    DayofMonth = parseInt(DayofMonth); 
+    DepTime = parseInt(DepTime); 
+    ArrTime = parseInt(ArrTime); 
+    FlightNum = parseInt(FlightNum); 
 
-    const object = {Year, Month, DayofMonth, DepTime, ArrTime, FlightNum, Origin: origin, Dest: dest, UniqueCarrier: uniqueCarrier};
+    const object = {Year, Month, DayofMonth, DepTime, ArrTime, FlightNum, Origin, Dest, UniqueCarrier};
 
     flights.insertOne(object, function(err, response){
       if (err) throw err;
@@ -96,16 +96,16 @@ router.put('/flights', async  function(req, res) {
 
     const {database, flights, db} = await run();
 
-    const {id, year, month, dayofMonth, depTime, arrTime, flightNum,  uniqueCarrier, origin, dest} = req.body;
+    let {id, Year, Month, DayofMonth, DepTime, ArrTime, FlightNum,  UniqueCarrier, Origin, Dest} = req.body;
   
-    const Year = parseInt(year); 
-    const Month = parseInt(month); 
-    const DayofMonth = parseInt(dayofMonth); 
-    const DepTime = parseInt(depTime); 
-    const ArrTime = parseInt(arrTime); 
-    const FlightNum = parseInt(flightNum); 
+    Year = parseInt(Year); 
+    Month = parseInt(Month); 
+    DayofMonth = parseInt(DayofMonth); 
+    DepTime = parseInt(DepTime); 
+    ArrTime = parseInt(ArrTime); 
+    FlightNum = parseInt(FlightNum); 
 
-    const newValues = { $set: {Year, Month, DayofMonth, DepTime, ArrTime, FlightNum, Origin: origin, Dest: dest, UniqueCarrier: uniqueCarrier}};
+    const newValues = { $set: {Year, Month, DayofMonth, DepTime, ArrTime, FlightNum, Origin, Dest, UniqueCarrier}};
     debug(newValues);
 
     flights.updateOne({"_id": new ObjectID(id)}, newValues, function(err, response) {
